@@ -17,6 +17,10 @@ public class Jogador {
 	public void adicionaCartaNoBaralho(Integer id) throws ExcecaoCartaNaoExiste, ExcecaoBaralhoCheio {
 		baralho.adicionaCarta(RepositorioCartas.getCarta(id));
 	}
+	
+	public Baralho getBaralho() {
+		return baralho;
+	}
 
 	public String getLogin() {
 		return login;

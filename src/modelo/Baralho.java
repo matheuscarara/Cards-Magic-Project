@@ -12,6 +12,10 @@ public class Baralho {
 		this.cartas = new ArrayList<Carta>();
 	}
 
+	public List<Carta> getCartas () {
+		return cartas;
+	}
+
 	public void adicionaCarta (Carta carta) throws ExcecaoBaralhoCheio {
 		if (cartas.size() == TAMANHOMAX)
 			throw new ExcecaoBaralhoCheio();
