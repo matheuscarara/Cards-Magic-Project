@@ -3,26 +3,35 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+	
 public class Baralho {
+	private static final Integer TAMANHOMAX = 40;
 	private List<Carta> cartas;
 
-	public Baralho(ArrayList<Carta> cartas) {
-		this.cartas = cartas;
-		cartas = new ArrayList<Carta>();
+	public Baralho(){
+		this.cartas = new ArrayList<Carta>();
 	}
 
-	public Carta retiraDoTopo() {
-		// cartas.size -1 ?
+	public void adicionaCarta (Carta carta) throws ExcecaoBaralhoCheio {
+		if (cartas.size() == TAMANHOMAX)
+			throw new ExcecaoBaralhoCheio();
+		cartas.add(carta);
+	}
+
+	public void removeCarta (Carta carta) throws ExcecaoBaralhoVazio {
+		if (cartas.size() == 0)
+			throw new ExcecaoBaralhoVazio();
+		cartas.remove(carta);
+	}
+	
+	public Carta comprarCarta () throws ExcecaoBaralhoVazio {
+		if (cartas.size() == 0)
+			throw new ExcecaoBaralhoVazio();
 		return cartas.remove(cartas.size());
 	}
 
-	private void adicionaAoBaralho(Carta novaCarta) {
-		cartas.add(novaCarta);
-	}
-
-	private void embaralha() {
+	public List<Carta> colocaEmJogo() {
 		Collections.shuffle(cartas);
+		return cartas;
 	}
-
 }
