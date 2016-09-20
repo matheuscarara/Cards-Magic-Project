@@ -26,10 +26,6 @@ public class RepositorioCartas {
 		criaCarta("Lobo Branco", 600, 400, Elemento.Vento);
 		criaCarta("Pegasus", 500, 400, Elemento.Vento);
 		criaCarta("Dragao Branco", 1200, 800, Elemento.Vento);
-		criaCarta("Vespa Gigante", 400, 400, Elemento.Vento);
-		criaCarta("Lagarto", 600, 500, Elemento.Vento);
-		criaCarta("Mestre do Vento", 2000, 2000, Elemento.Vento);
-		criaCarta("Furacao", 800, 900, Elemento.Vento);
 		// Cartas Fogo
 		criaCarta("Filhote Dragao Vermelho", 800, 600, Elemento.Fogo);
 		criaCarta("General de Fogo", 1500, 1000, Elemento.Fogo);
@@ -41,10 +37,6 @@ public class RepositorioCartas {
 		criaCarta("BoiTaTa", 800, 800, Elemento.Fogo);
 		criaCarta("Mula sem Cabeca", 900, 800, Elemento.Fogo);
 		criaCarta("Golem de Lava", 1000, 700, Elemento.Fogo);
-		criaCarta("Hades", 1200, 800, Elemento.Fogo);
-		criaCarta("Entei", 1000, 1000, Elemento.Fogo);
-		criaCarta("Cavalo de Fogo", 600, 600, Elemento.Fogo);
-		criaCarta("Gigante de Fogo", 800, 800, Elemento.Fogo);
 		// Cartas Agua
 		criaCarta("Boto Rosa", 500, 400, Elemento.Agua);
 		criaCarta("Filhote Dragao Azul", 800, 600, Elemento.Agua);
@@ -57,10 +49,6 @@ public class RepositorioCartas {
 		criaCarta("Sereia", 700, 600, Elemento.Agua);
 		criaCarta("Afogador", 500, 400, Elemento.Agua);
 		criaCarta("Megalodon", 800, 900, Elemento.Agua);
-		criaCarta("Lula Gigante", 1000, 900, Elemento.Agua);
-		criaCarta("Poseidon", 1200, 1200, Elemento.Agua);
-		criaCarta("Lusca", 900, 700, Elemento.Agua);
-		criaCarta("Monstro do Lago Ness", 900, 900, Elemento.Agua);
 	}
 
 	private static void criaCarta(String nome, Integer ataque, Integer defesa, Elemento elemento) {

@@ -1,12 +1,13 @@
 package modelo;
 
 public class Carta {
-	
+
 	private String nome;
 	private Integer ataque, defesa, id;
 	private Elemento elemento;
-	
-	public Carta(String nome, Integer ataque, Integer defesa, Elemento elemento, Integer id) {
+
+	public Carta(String nome, Integer ataque, Integer defesa,
+			Elemento elemento, Integer id) {
 		this.nome = nome;
 		this.id = id;
 		this.ataque = ataque;
@@ -25,7 +26,7 @@ public class Carta {
 	public Integer getDefesa() {
 		return defesa;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -33,5 +34,10 @@ public class Carta {
 	public Elemento getElemento() {
 		return elemento;
 	}
-	
+
+	public static Carta getByID(Integer id) throws ExcecaoCartaNaoExiste {
+		if (!RepositorioCartas.getCarta(id).getId().equals(id))
+			throw new ExcecaoCartaNaoExiste();
+			return RepositorioCartas.getCarta(id);
+	}
 }

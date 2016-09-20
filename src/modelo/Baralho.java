@@ -29,9 +29,9 @@ public class Baralho {
 	}
 
 	public Carta comprarCarta() throws ExcecaoBaralhoVazio {
-		if (cartas.size() == 0)
+		if (cartas.size() < 0)
 			throw new ExcecaoBaralhoVazio();
-		return cartas.remove(cartas.size());
+		return cartas.remove(cartas.size()-1);
 	}
 
 	public List<Carta> embaralha() {
