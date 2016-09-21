@@ -59,7 +59,9 @@ public class Jogador {
 		return mao.size();
 	}
 
-	public static List<Carta> getMao() {
+	public static List<Carta> getMao() throws ExcecaoMaoVazia {
+		if (mao.size() == 0)
+			throw new ExcecaoMaoVazia();
 		return mao;
 	}
 

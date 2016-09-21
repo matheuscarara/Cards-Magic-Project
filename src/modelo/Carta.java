@@ -35,9 +35,9 @@ public class Carta {
 		return elemento;
 	}
 
-	public static Carta getByID(Integer id) throws ExcecaoCartaNaoExiste {
-		if (!RepositorioCartas.getCarta(id).getId().equals(id))
-			throw new ExcecaoCartaNaoExiste();
-			return RepositorioCartas.getCarta(id);
-	}
+//	public static Carta getByID(Integer id) throws ExcecaoCartaNaoExiste {
+//		if (!RepositorioCartas.getCarta(id).getId().equals(id))
+//			throw new ExcecaoCartaNaoExiste();
+//			return RepositorioCartas.getCarta(id);
+//	}
 }
