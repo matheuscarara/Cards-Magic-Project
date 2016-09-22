@@ -20,8 +20,11 @@ public class Tabuleiro {
 	}
 
 	public static List<Carta> getCampo() throws ExcecaoCampoVazio {
-		if (campo.size() == 0 || campo.equals(null))
+		System.out.println("nao entrou no if");
+		if (campo.size() == 0 || campo.equals(null)){
+			System.out.println("entrou no if");
 			throw new ExcecaoCampoVazio();
+		}
 		return campo;
 	}
 //metodo de retirar carta do campo
