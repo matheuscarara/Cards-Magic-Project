@@ -4,38 +4,42 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+//classe
 public class Baralho {
 	private static final Integer TAMANHOMAX = 40;
-	private List<Carta> cartas;
-
+	private List<Carta> baralho;
+//construtor
+	//baralho eh uma lista de cartas
 	public Baralho() {
-		this.cartas = new ArrayList<Carta>();
+		this.baralho = new ArrayList<Carta>();
 	}
-
-	public List<Carta> getCartas() {
-		return cartas;
+//metodo que retorna o baralho
+	public List<Carta> getBaralho() {
+		return baralho;
 	}
-
+//metodo de adicionar carta no baralho
 	public void adicionaCarta(Carta carta) throws ExcecaoBaralhoCheio {
-		if (cartas.size() == TAMANHOMAX)
+		if (baralho.size() == TAMANHOMAX)
 			throw new ExcecaoBaralhoCheio();
-		cartas.add(carta);
+		baralho.add(carta);
 	}
-
+//metodo de remover carta do baralho
 	public void removeCarta(Carta carta) throws ExcecaoBaralhoVazio {
-		if (cartas.size() == 0)
+		if (baralho.size() == 0)
 			throw new ExcecaoBaralhoVazio();
-		cartas.remove(carta);
+		baralho.remove(carta);
 	}
-
+//metodo de comprar carta do topo do baralho
+	//remove do topo do baralho
+	//retorna carta removida
 	public Carta comprarCarta() throws ExcecaoBaralhoVazio {
-		if (cartas.size() < 0)
+		if (baralho.size() < 0)
 			throw new ExcecaoBaralhoVazio();
-		return cartas.remove(cartas.size()-1);
+		return baralho.remove(baralho.size()-1);
 	}
-
+//metodo de embaralhar o baralho
 	public List<Carta> embaralha() {
-		Collections.shuffle(cartas);
-		return cartas;
+		Collections.shuffle(baralho);
+		return baralho;
 	}
 }

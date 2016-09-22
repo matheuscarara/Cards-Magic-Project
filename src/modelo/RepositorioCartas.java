@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioCartas {
-	
+
 	private static List<Carta> cartas = new ArrayList<Carta>();
-	
+
+	// metodo getter que retorna o id da carta.
 	public static Carta getCarta(Integer id) throws ExcecaoCartaNaoExiste {
 		if (id >= cartas.size() || id < 0) {
 			throw new ExcecaoCartaNaoExiste();
@@ -14,6 +15,7 @@ public class RepositorioCartas {
 		return cartas.get(id);
 	}
 
+	// metodo gerador de cartas
 	public static void geraCartas() {
 		// Cartas Vento
 		criaCarta("Saci", 500, 400, Elemento.Vento);
@@ -51,7 +53,9 @@ public class RepositorioCartas {
 		criaCarta("Megalodon", 800, 900, Elemento.Agua);
 	}
 
-	private static void criaCarta(String nome, Integer ataque, Integer defesa, Elemento elemento) {
+	// metodo que cria uma carta nova
+	private static void criaCarta(String nome, Integer ataque, Integer defesa,
+			Elemento elemento) {
 		Carta carta = new Carta(nome, ataque, defesa, elemento, cartas.size());
 		cartas.add(carta);
 	}

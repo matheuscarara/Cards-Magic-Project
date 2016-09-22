@@ -6,7 +6,8 @@ import java.util.List;
 public class RepositorioJogadores {
 	
 	private static List<Jogador> jogadores = new ArrayList<Jogador>();
-	
+//metodo de criar jogador
+	//insere jogador numa lista de jogadores
 	public static void criaJogador(String login, String senha) throws ExcecaoJogadorJaExiste{
 		if (retornaIndiceJogador(login) != -1) {
 			throw new ExcecaoJogadorJaExiste();
@@ -25,7 +26,7 @@ public class RepositorioJogadores {
 		}
 		return -1;
 	}
-	
+	//metodo de fazer login
 	public static Jogador entrar (String login, String senha) throws ExcecaoJogadorNaoExiste, ExcecaoSenhaErrada{
 		int indice = retornaIndiceJogador(login);
 		if (indice == -1)

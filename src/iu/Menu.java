@@ -73,23 +73,23 @@ public class Menu {
 			String texto = "";
 			switch (opcao) {
 			case 1:
-				if (jogador.getBaralho().getCartas().isEmpty()) {
+				if (jogador.getBaralho().getBaralho().isEmpty()) {
 					texto = "Seu Baralho não possui cartas";
 				} else {
-					for (int i = 0; i < jogador.getBaralho().getCartas().size(); i++) {
-						texto += jogador.getBaralho().getCartas().get(i)
+					for (int i = 0; i < jogador.getBaralho().getBaralho().size(); i++) {
+						texto += jogador.getBaralho().getBaralho().get(i)
 								.getId();
 						texto += " "
-								+ jogador.getBaralho().getCartas().get(i)
+								+ jogador.getBaralho().getBaralho().get(i)
 										.getNome();
 						texto += " "
-								+ jogador.getBaralho().getCartas().get(i)
+								+ jogador.getBaralho().getBaralho().get(i)
 										.getAtaque();
 						texto += " "
-								+ jogador.getBaralho().getCartas().get(i)
+								+ jogador.getBaralho().getBaralho().get(i)
 										.getDefesa();
 						texto += " "
-								+ jogador.getBaralho().getCartas().get(i)
+								+ jogador.getBaralho().getBaralho().get(i)
 										.getElemento().name();
 						texto += "\n";
 					}

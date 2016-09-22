@@ -11,7 +11,8 @@ public class Tabuleiro {
 	public Tabuleiro() {
 		Tabuleiro.campo = new ArrayList<Carta>();
 	}
-
+//metodo de colocar carta em campo
+	//adicionando uma carta ao campo
 	public static void colocaEmCampo(Carta carta) throws ExcecaoCampoCheio {
 		if (campo.size() - 1 == TAMANHO)
 			throw new ExcecaoCampoCheio();
@@ -23,17 +24,11 @@ public class Tabuleiro {
 			throw new ExcecaoCampoVazio();
 		return campo;
 	}
-
+//metodo de retirar carta do campo
 	public static void retiraDoCampo(Integer posicao) throws ExcecaoCampoVazio {
 		if (campo.size() == 0 || campo.equals(null))
 			throw new ExcecaoCampoVazio();
 		campo.remove(posicao);
 	}
 
-	// public static Carta mostraCartaDoCampo(Integer posicao) throws
-	// ExcecaoCampoVazio {
-	// if (campo.size() == 0)
-	// throw new ExcecaoCampoVazio();
-	// return campo.get(posicao);
-	// }
 }
