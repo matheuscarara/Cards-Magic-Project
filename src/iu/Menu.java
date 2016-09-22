@@ -167,6 +167,7 @@ public class Menu {
 			switch (opcao) {
 			case 1:
 				try {
+					jogador.getBaralho().embaralha();
 					jogador.iniciaMaoJogador();
 					JOptionPane.showMessageDialog(null, "Mao iniciada!");
 				} catch (ExcecaoBaralhoVazio e1) {
