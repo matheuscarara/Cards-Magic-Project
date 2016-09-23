@@ -143,6 +143,15 @@ public class Menu {
 				}
 				break;
 			case 3:
+				JOptionPane.showMessageDialog(null, "Entrando no tabuleiro...\n"
+												+   "Iniciando mao...");
+				try {
+					jogador.getBaralho().embaralha();
+					jogador.iniciaMaoJogador();
+					JOptionPane.showMessageDialog(null, "Mao iniciada!");
+				} catch (ExcecaoBaralhoVazio e1) {
+					JOptionPane.showMessageDialog(null, "Baralho vazio.");
+				}
 				dentro = false;
 				break;
 			case 4:
@@ -158,23 +167,13 @@ public class Menu {
 			String campo = "";
 			String mao = "";
 			opcao = Integer.parseInt(JOptionPane
-					.showInputDialog("Digite 1 para iniciar mao;\n"
-							+ "Digite 2 para ver sua mao;\n"
-							+ "Digite 3 para ver seu campo;\n"
-							+ "Digite 4 para inserir carta no seu campo;\n"
-							+ "Digite 5 para retirar carta de campo;\n"
-							+ "Digite 6 para sair."));
+					.showInputDialog("Digite 1 para ver sua mao;\n"
+							+ "Digite 2 para ver seu campo;\n"
+							+ "Digite 3 para inserir carta no seu campo;\n"
+							+ "Digite 4 para retirar carta de campo;\n"
+							+ "Digite 5 para sair."));
 			switch (opcao) {
 			case 1:
-				try {
-					jogador.getBaralho().embaralha();
-					jogador.iniciaMaoJogador();
-					JOptionPane.showMessageDialog(null, "Mao iniciada!");
-				} catch (ExcecaoBaralhoVazio e1) {
-					JOptionPane.showMessageDialog(null, "Baralho vazio.");
-				}
-				break;
-			case 2:
 				try {
 					for (int i = 0; i < Jogador.getMao().size(); i++) {
 						mao += " " + Jogador.getMao().get(i).getId();
@@ -189,7 +188,7 @@ public class Menu {
 					JOptionPane.showMessageDialog(null, "Mao vazia.");
 				}
 				break;
-			case 3:
+			case 2:
 				try {
 					for (int i = 0; i < Tabuleiro.getCampo().size(); i++) {
 						campo += " " + Tabuleiro.getCampo().get(i).getId();
@@ -205,7 +204,7 @@ public class Menu {
 					JOptionPane.showMessageDialog(null, "Campo vazio");
 				}
 				break;
-			case 4:
+			case 3:
 				boolean alterando = true;
 				while (alterando) {
 					Integer opcaoAddCartaCampo = null;
@@ -244,7 +243,7 @@ public class Menu {
 						break;
 					}
 				}
-			case 5:
+			case 4:
 				boolean alterando2 = true;
 				while (alterando2) {
 					Integer opcaoRemCartaCampo = null;
@@ -282,7 +281,7 @@ public class Menu {
 					}
 
 				}
-			case 6:
+			case 5:
 				noTabuleiro = false;
 				break;
 			default:
