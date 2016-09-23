@@ -17,7 +17,7 @@ import modelo.RepositorioJogadores;
 import modelo.Tabuleiro;
 
 public class Menu {
-	static final Integer QUANTIDADETOTALCARTAS = 30;
+	static final Integer QUANTIDADETOTALCARTAS = 9;
 
 	public static void main(String[] args) {
 		boolean logando = true;
@@ -188,6 +188,7 @@ public class Menu {
 					JOptionPane.showMessageDialog(null, "Mao vazia.");
 				}
 				break;
+				//DA PAU AQUI
 			case 2:
 				try {
 					for (int i = 0; i < Tabuleiro.getCampo().size(); i++) {
@@ -204,6 +205,7 @@ public class Menu {
 					JOptionPane.showMessageDialog(null, "Campo vazio");
 				}
 				break;
+				//DA PAU AQUI
 			case 3:
 				boolean alterando = true;
 				while (alterando) {
@@ -243,6 +245,7 @@ public class Menu {
 						break;
 					}
 				}
+				//DA PAU AQUI
 			case 4:
 				boolean alterando2 = true;
 				while (alterando2) {
