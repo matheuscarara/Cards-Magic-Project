@@ -17,7 +17,7 @@ import modelo.RepositorioJogadores;
 import modelo.Tabuleiro;
 
 public class Menu {
-	static final Integer QUANTIDADETOTALCARTAS = 9;
+	static final Integer QUANTIDADETOTALCARTAS = RepositorioCartas.getTamanhoRepositorio();
 
 	public static void main(String[] args) {
 		boolean logando = true;
@@ -30,28 +30,22 @@ public class Menu {
 		RepositorioCartas.geraCartas();
 
 		while (logando) {
-			opcao = Integer
-					.parseInt(JOptionPane
-							.showInputDialog("Digite 1 para realizar um login ou 2 para criar um jogador"));
+			opcao = Integer.parseInt(
+					JOptionPane.showInputDialog("Digite 1 para realizar um login ou 2 para criar um jogador"));
 			switch (opcao) {
 			case 1:
-				login = JOptionPane
-						.showInputDialog("Digite o Login do jogador");
-				senha = JOptionPane
-						.showInputDialog("Digite a senha do jogador");
+				login = JOptionPane.showInputDialog("Digite o Login do jogador");
+				senha = JOptionPane.showInputDialog("Digite a senha do jogador");
 				try {
 					jogador = RepositorioJogadores.entrar(login, senha);
 					logando = false;
 				} catch (ExcecaoJogadorNaoExiste | ExcecaoSenhaErrada e) {
-					JOptionPane.showMessageDialog(null,
-							"Login ou Senha Errados!");
+					JOptionPane.showMessageDialog(null, "Login ou Senha Errados!");
 				}
 				break;
 			case 2:
-				login = JOptionPane
-						.showInputDialog("Digite o Login do jogador");
-				senha = JOptionPane
-						.showInputDialog("Digite a Senha do jogador");
+				login = JOptionPane.showInputDialog("Digite o Login do jogador");
+				senha = JOptionPane.showInputDialog("Digite a Senha do jogador");
 				try {
 					RepositorioJogadores.criaJogador(login, senha);
 				} catch (ExcecaoJogadorJaExiste e) {
@@ -64,12 +58,9 @@ public class Menu {
 			}
 		}
 		while (dentro) {
-			opcao = Integer
-					.parseInt(JOptionPane
-							.showInputDialog("Digite 1 ver seu baralho;\n"
-									+ "Digite 2 para adicionar cartas no seu baralho;\n"
-									+ "Digite 3 para entrar no tabuleiro;\n"
-									+ "Digite 4 para sair."));
+			opcao = Integer.parseInt(JOptionPane
+					.showInputDialog("Digite 1 ver seu baralho;\n" + "Digite 2 para adicionar cartas no seu baralho;\n"
+							+ "Digite 3 para entrar no tabuleiro;\n" + "Digite 4 para sair."));
 			String texto = "";
 			switch (opcao) {
 			case 1:
@@ -77,51 +68,37 @@ public class Menu {
 					texto = "Seu Baralho não possui cartas";
 				} else {
 					for (int i = 0; i < jogador.getBaralho().getBaralho().size(); i++) {
-						texto += jogador.getBaralho().getBaralho().get(i)
-								.getId();
-						texto += " "
-								+ jogador.getBaralho().getBaralho().get(i)
-										.getNome();
-						texto += " "
-								+ jogador.getBaralho().getBaralho().get(i)
-										.getAtaque();
-						texto += " "
-								+ jogador.getBaralho().getBaralho().get(i)
-										.getDefesa();
-						texto += " "
-								+ jogador.getBaralho().getBaralho().get(i)
-										.getElemento().name();
+						texto += jogador.getBaralho().getBaralho().get(i).getId();
+						texto += " " + jogador.getBaralho().getBaralho().get(i).getNome();
+						texto += " " + jogador.getBaralho().getBaralho().get(i).getAtaque();
+						texto += " " + jogador.getBaralho().getBaralho().get(i).getDefesa();
+						texto += " " + jogador.getBaralho().getBaralho().get(i).getElemento().name();
 						texto += "\n";
 					}
 				}
-				JOptionPane.showMessageDialog(null, texto);
+				JOptionPane.showMessageDialog(null,"Total de cartas: "+ jogador.getBaralho().retornaTamanhoBaralho() +"\n\n"+ texto);
 				break;
 			case 2:
 				boolean alterando = true;
 
 				while (alterando) {
+					texto = "";
 					for (int i = 0; i < QUANTIDADETOTALCARTAS; i++) {
+
 						try {
+
 							texto += RepositorioCartas.getCarta(i).getId();
-							texto += " "
-									+ RepositorioCartas.getCarta(i).getNome();
-							texto += " "
-									+ RepositorioCartas.getCarta(i).getAtaque();
-							texto += " "
-									+ RepositorioCartas.getCarta(i).getDefesa();
-							texto += " "
-									+ RepositorioCartas.getCarta(i)
-											.getElemento().name();
+							texto += " " + RepositorioCartas.getCarta(i).getNome();
+							texto += " " + RepositorioCartas.getCarta(i).getAtaque();
+							texto += " " + RepositorioCartas.getCarta(i).getDefesa();
+							texto += " " + RepositorioCartas.getCarta(i).getElemento().name();
 							texto += "\n";
 						} catch (ExcecaoCartaNaoExiste e) {
-							JOptionPane.showMessageDialog(null,
-									"Carta nao existe.");
+							JOptionPane.showMessageDialog(null, "Carta nao existe.");
 						}
 					}
-					Integer opcao2 = Integer
-							.parseInt(JOptionPane
-									.showInputDialog("Digite o Id da carta a ser inserida no baralho.\n"
-											+ "Digite 50 para sair. \n" + texto));
+					Integer opcao2 = Integer.parseInt(JOptionPane.showInputDialog(
+							"Digite o Id da carta a ser inserida no baralho.\n" + "Digite 50 para sair. \n" + texto));
 					switch (opcao2) {
 					case 50:
 						alterando = false;
@@ -129,30 +106,31 @@ public class Menu {
 					default:
 						try {
 							jogador.adicionaCartaNoBaralho(opcao2);
-							JOptionPane.showMessageDialog(null,
-									"Carta adicionada!");
+							JOptionPane.showMessageDialog(null, "Carta adicionada!");
 						} catch (ExcecaoCartaNaoExiste e) {
-							JOptionPane.showMessageDialog(null,
-									"Carta não existe!");
+							JOptionPane.showMessageDialog(null, "Carta não existe!");
 						} catch (ExcecaoBaralhoCheio e) {
-							JOptionPane.showMessageDialog(null,
-									"Baralho atingiu número limite de cartas.");
+							JOptionPane.showMessageDialog(null, "Baralho atingiu número limite de cartas.");
 						}
 						break;
 					}
 				}
 				break;
 			case 3:
-				JOptionPane.showMessageDialog(null, "Entrando no tabuleiro...\n"
-												+   "Iniciando mao...");
-				try {
-					jogador.getBaralho().embaralha();
-					jogador.iniciaMaoJogador();
-					JOptionPane.showMessageDialog(null, "Mao iniciada!");
-				} catch (ExcecaoBaralhoVazio e1) {
-					JOptionPane.showMessageDialog(null, "Baralho vazio.");
+				if (jogador.getBaralho().verificaBaralhoCompleto()) {
+					JOptionPane.showMessageDialog(null, "Entrando no tabuleiro...\n" + "Iniciando mao...");
+					try {
+						jogador.getBaralho().embaralha();
+						jogador.iniciaMaoJogador();
+						JOptionPane.showMessageDialog(null, "Mao iniciada!");
+					} catch (ExcecaoBaralhoVazio e1) {
+						JOptionPane.showMessageDialog(null, "Baralho vazio.");
+					}
+					dentro = false;
+				} else {
+					JOptionPane.showMessageDialog(null, "Seu baralho nao esta completo.");
+					break;
 				}
-				dentro = false;
 				break;
 			case 4:
 				JOptionPane.showMessageDialog(null, "Sessão Finalizada.");
@@ -166,12 +144,9 @@ public class Menu {
 		while (noTabuleiro) {
 			String campo = "";
 			String mao = "";
-			opcao = Integer.parseInt(JOptionPane
-					.showInputDialog("Digite 1 para ver sua mao;\n"
-							+ "Digite 2 para ver seu campo;\n"
-							+ "Digite 3 para inserir carta no seu campo;\n"
-							+ "Digite 4 para retirar carta de campo;\n"
-							+ "Digite 5 para sair."));
+			opcao = Integer.parseInt(JOptionPane.showInputDialog("Digite 1 para ver sua mao;\n"
+					+ "Digite 2 para ver seu campo;\n" + "Digite 3 para inserir carta no seu campo;\n"
+					+ "Digite 4 para retirar carta de campo;\n" + "Digite 5 para sair."));
 			switch (opcao) {
 			case 1:
 				try {
@@ -188,7 +163,7 @@ public class Menu {
 					JOptionPane.showMessageDialog(null, "Mao vazia.");
 				}
 				break;
-				//DA PAU AQUI
+			// DA PAU AQUI
 			case 2:
 				try {
 					for (int i = 0; i < Tabuleiro.getCampo().size(); i++) {
@@ -196,8 +171,7 @@ public class Menu {
 						campo += " " + Tabuleiro.getCampo().get(i).getNome();
 						campo += " " + Tabuleiro.getCampo().get(i).getAtaque();
 						campo += " " + Tabuleiro.getCampo().get(i).getDefesa();
-						campo += " "
-								+ Tabuleiro.getCampo().get(i).getElemento();
+						campo += " " + Tabuleiro.getCampo().get(i).getElemento();
 						campo += "\n";
 					}
 					JOptionPane.showMessageDialog(null, campo);
@@ -205,7 +179,7 @@ public class Menu {
 					JOptionPane.showMessageDialog(null, "Campo vazio");
 				}
 				break;
-				//DA PAU AQUI
+			// DA PAU AQUI
 			case 3:
 				boolean alterando = true;
 				while (alterando) {
@@ -219,10 +193,8 @@ public class Menu {
 							mao += " " + Jogador.getMao().get(i).getElemento();
 							mao += "\n";
 						}
-						opcaoAddCartaCampo = Integer
-								.parseInt(JOptionPane
-										.showInputDialog("Digite a carta a ser inserida: \n"
-												+ "Digite 50 para sair." + mao));
+						opcaoAddCartaCampo = Integer.parseInt(JOptionPane
+								.showInputDialog("Digite a carta a ser inserida: \n" + "Digite 50 para sair." + mao));
 					} catch (ExcecaoMaoVazia e) {
 						JOptionPane.showMessageDialog(null, "Mao vazia.");
 					}
@@ -233,11 +205,9 @@ public class Menu {
 					default:
 						try {
 							try {
-								Tabuleiro.colocaEmCampo(Tabuleiro.getCampo()
-										.get(opcaoAddCartaCampo));
+								Tabuleiro.colocaEmCampo(Tabuleiro.getCampo().get(opcaoAddCartaCampo));
 							} catch (ExcecaoCampoCheio e) {
-								JOptionPane.showMessageDialog(null,
-										"Campo cheio.");
+								JOptionPane.showMessageDialog(null, "Campo cheio.");
 							}
 						} catch (ExcecaoCampoVazio e) {
 							JOptionPane.showMessageDialog(null, "Campo vazio.");
@@ -245,7 +215,7 @@ public class Menu {
 						break;
 					}
 				}
-				//DA PAU AQUI
+				// DA PAU AQUI
 			case 4:
 				boolean alterando2 = true;
 				while (alterando2) {
@@ -255,21 +225,16 @@ public class Menu {
 						for (int i = 0; i < Tabuleiro.getCampo().size(); i++) {
 							mao += " " + Tabuleiro.getCampo().get(i).getId();
 							mao += " " + Tabuleiro.getCampo().get(i).getNome();
-							mao += " "
-									+ Tabuleiro.getCampo().get(i).getAtaque();
-							mao += " "
-									+ Tabuleiro.getCampo().get(i).getDefesa();
-							mao += " "
-									+ Tabuleiro.getCampo().get(i).getElemento();
+							mao += " " + Tabuleiro.getCampo().get(i).getAtaque();
+							mao += " " + Tabuleiro.getCampo().get(i).getDefesa();
+							mao += " " + Tabuleiro.getCampo().get(i).getElemento();
 							mao += "\n";
 						}
 					} catch (ExcecaoCampoVazio e) {
 						JOptionPane.showMessageDialog(null, "Campo vazio.");
 					}
-					opcaoRemCartaCampo = Integer
-							.parseInt(JOptionPane
-									.showInputDialog("Digite a posicao da carta a ser removida: \n"
-											+ "Digite 50 para sair." + mao));
+					opcaoRemCartaCampo = Integer.parseInt(JOptionPane.showInputDialog(
+							"Digite a posicao da carta a ser removida: \n" + "Digite 50 para sair." + mao));
 					switch (opcaoRemCartaCampo) {
 					case 50:
 						alterando2 = false;

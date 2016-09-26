@@ -31,13 +31,16 @@ public class RepositorioCartas {
 		criaCarta("Boto Rosa", 500, 400, Elemento.Agua);
 		criaCarta("Filhote Dragao Azul", 800, 600, Elemento.Agua);
 		criaCarta("General de Agua", 1500, 1000, Elemento.Agua);
-		
+
 	}
 
 	// metodo que cria uma carta nova
-	private static void criaCarta(String nome, Integer ataque, Integer defesa,
-			Elemento elemento) {
+	private static void criaCarta(String nome, Integer ataque, Integer defesa, Elemento elemento) {
 		Carta carta = new Carta(nome, ataque, defesa, elemento, cartas.size());
 		cartas.add(carta);
+	}
+
+	public static Integer getTamanhoRepositorio() {
+		return cartas.size();
 	}
 }

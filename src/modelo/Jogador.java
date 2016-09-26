@@ -54,7 +54,7 @@ public class Jogador {
 	}
 //metodo que inicia a mao do jogador
 	//pega as 6 cartas do topo do baralho e as move para uma lista mao do jogador
-	public static Integer iniciaMaoJogador() throws ExcecaoBaralhoVazio {
+	public Integer iniciaMaoJogador() throws ExcecaoBaralhoVazio {
 		for (int i = 0; i < TAMANHOMAO; i++) {
 			mao.add(baralho.comprarCarta());
 		}
