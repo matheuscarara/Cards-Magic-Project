@@ -12,6 +12,7 @@ import modelo.ExcecaoJogadorNaoExiste;
 import modelo.ExcecaoMaoVazia;
 import modelo.ExcecaoSenhaErrada;
 import modelo.Jogador;
+import modelo.Mao;
 import modelo.RepositorioCartas;
 import modelo.RepositorioJogadores;
 import modelo.Tabuleiro;
@@ -20,10 +21,12 @@ public class Menu {
 	static final Integer QUANTIDADETOTALCARTAS = 30;
 
 	public static void main(String[] args) {
+		Tabuleiro tabuleiro;
 		boolean logando = true;
 		boolean dentro = true;
 		boolean noTabuleiro = false;
 		Jogador jogador = null;
+		Mao maoJogador = null;
 		String login;
 		String senha;
 		Integer opcao;
@@ -154,9 +157,10 @@ public class Menu {
 				JOptionPane.showMessageDialog(null,
 						"Entrando no tabuleiro...\n" + "Iniciando mao...");
 				try {
+					maoJogador = new Mao();
 					if (jogador.getBaralho().baralhoEstaCompleto()) {
 						jogador.getBaralho().embaralha();
-						jogador.iniciaMaoJogador();
+						maoJogador.iniciaMao();
 						JOptionPane.showMessageDialog(null, "Mao iniciada!");
 						noTabuleiro = true;
 					} else {
@@ -181,6 +185,7 @@ public class Menu {
 		while (noTabuleiro) {
 			String campo = "";
 			String mao = "";
+			tabuleiro = new Tabuleiro();
 			opcao = Integer.parseInt(JOptionPane
 					.showInputDialog("Digite 1 para ver sua mao;\n"
 							+ "Digite 2 para ver seu campo;\n"
@@ -190,12 +195,12 @@ public class Menu {
 			switch (opcao) {
 			case 1:
 				try {
-					for (int i = 0; i < jogador.getMao().size(); i++) {
-						mao += " " + jogador.getMao().get(i).getId();
-						mao += " " + jogador.getMao().get(i).getNome();
-						mao += " " + jogador.getMao().get(i).getAtaque();
-						mao += " " + jogador.getMao().get(i).getDefesa();
-						mao += " " + jogador.getMao().get(i).getElemento();
+					for (int i = 0; i < maoJogador.getMao().size(); i++) {
+						mao += " " + maoJogador.getMao().get(i).getId();
+						mao += " " + maoJogador.getMao().get(i).getNome();
+						mao += " " + maoJogador.getMao().get(i).getAtaque();
+						mao += " " + maoJogador.getMao().get(i).getDefesa();
+						mao += " " + maoJogador.getMao().get(i).getElemento();
 						mao += "\n";
 					}
 					JOptionPane.showMessageDialog(null, mao);
@@ -204,7 +209,6 @@ public class Menu {
 				}
 				break;
 			case 2:
-				Tabuleiro tabuleiro = new Tabuleiro();
 				try {
 					for (int i = 0; i < tabuleiro.getCampo().size(); i++) {
 						campo += " " + tabuleiro.getCampo().get(i).getId();
@@ -220,22 +224,14 @@ public class Menu {
 					JOptionPane.showMessageDialog(null, "Campo vazio");
 				}
 				break;
-			// DA PAU AQUI
 			case 3:
 				boolean alterando = true;
 				while (alterando) {
 					Integer opcaoAddCartaCampo = null;
 					tabuleiro = new Tabuleiro();
 					try {
-						mao = "";
-						for (int i = 0; i < jogador.getMao().size(); i++) {
-							mao += " " + i;
-							mao += " " + jogador.getMao().get(i).getNome();
-							mao += " " + jogador.getMao().get(i).getAtaque();
-							mao += " " + jogador.getMao().get(i).getDefesa();
-							mao += " " + jogador.getMao().get(i).getElemento();
-							mao += "\n";
-						}
+						JOptionPane.showMessageDialog(null,
+								maoJogador.mostrarMao(jogador));
 						opcaoAddCartaCampo = Integer
 								.parseInt(JOptionPane
 										.showInputDialog("Digite a carta a ser inserida: \n"
@@ -249,11 +245,10 @@ public class Menu {
 						break;
 					default:
 						try {
-							tabuleiro.colocaEmCampo(jogador.getMao().get(
-									opcaoAddCartaCampo));
-							jogador.getMao().remove(opcaoAddCartaCampo);
-						} catch (ExcecaoMaoVazia e) {
-							JOptionPane.showMessageDialog(null, "mao vazia");
+							tabuleiro.colocaEmCampo(maoJogador
+									.getCartaDaMao(opcaoAddCartaCampo));
+							// tabuleiro.colocaEmCampo(jogador.getMao().get(opcaoAddCartaCampo));
+							// jogador.getMao().remove(opcaoAddCartaCampo);
 						} catch (ExcecaoCampoCheio e) {
 							JOptionPane.showMessageDialog(null, "Campo cheio.");
 						}
@@ -264,7 +259,6 @@ public class Menu {
 				boolean alterando2 = true;
 				while (alterando2) {
 					Integer opcaoRemCartaCampo = null;
-					tabuleiro = new Tabuleiro();
 					try {
 						for (int i = 0; i < tabuleiro.getCampo().size(); i++) {
 							mao += " " + tabuleiro.getCampo().get(i).getId();
