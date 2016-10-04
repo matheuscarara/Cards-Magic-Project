@@ -12,7 +12,6 @@ public class Duelista {
 	private Usuario jogador;
 	private static final Integer TAMANHOMAXMAO = 6;
 
-	// classe duelador
 	public Duelista(Usuario jogador) {
 		this.mao = new ArrayList<Carta>();
 		this.baralhoDoJogo = new Baralho();
@@ -45,9 +44,6 @@ public class Duelista {
 		alvo.receberDano(dano);
 	}
 
-	// metodo que inicia a mao do jogador
-	// pega as 6 cartas do topo do baralho e as move para uma lista mao do
-	// jogador
 	public void iniciaMao() {
 		for (int i = 0; i < TAMANHOMAXMAO; i++) {
 			try {
@@ -57,10 +53,10 @@ public class Duelista {
 		}
 	}
 
-	public Integer getTamanhoDaMao(){
+	public Integer getTamanhoDaMao() {
 		return mao.size();
 	}
-	
+
 	public List<Carta> getMao() throws ExcecaoMaoVazia {
 		if (mao.size() == 0)
 			throw new ExcecaoMaoVazia();
@@ -89,7 +85,5 @@ public class Duelista {
 		}
 		return mao;
 	}
-	
-	
-	
+
 }

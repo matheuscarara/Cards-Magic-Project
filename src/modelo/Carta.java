@@ -6,8 +6,8 @@ public class Carta {
 	private Integer ataque, defesa, id;
 	private String elemento;
 
-	public Carta(String nome, Integer ataque, Integer defesa,
-			Integer id, String elemento) {
+	public Carta(String nome, Integer ataque, Integer defesa, Integer id,
+			String elemento) {
 		this.nome = nome;
 		this.ataque = ataque;
 		this.defesa = defesa;

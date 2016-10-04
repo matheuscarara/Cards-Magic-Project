@@ -18,8 +18,6 @@ public class Tabuleiro {
 		duelista.iniciaMao();
 	}
 
-	// metodo de colocar carta em campo
-	// adicionando uma carta ao campo
 	public void colocaEmCampo(Integer indice) throws ExcecaoCampoCheio {
 		if (mandoDeCampo == true) {
 			if (campoPrimeiro.size() - 1 == TAMANHO)
@@ -48,7 +46,6 @@ public class Tabuleiro {
 		}
 	}
 
-	// metodo de retirar carta do campo
 	public void retiraDoCampo(Integer posicao) throws ExcecaoCampoVazio {
 		if (mandoDeCampo == true) {
 			if (campoPrimeiro.size() == 0)
@@ -75,11 +72,12 @@ public class Tabuleiro {
 			return campoSegundo.size();
 	}
 
-	public void decideLado(Moeda lado1) {
+	public Boolean decideLado(Moeda lado1) {
 		Moeda lado2 = jogaMoeda();
 		if (lado1 == lado2) {
 			mandoDeCampo = true;
 		} else
 			mandoDeCampo = false;
+		return mandoDeCampo;
 	}
 }
