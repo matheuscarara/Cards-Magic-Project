@@ -15,9 +15,9 @@ public class Jogador {
 
 	// metodo de adicionar carta no baralho atraves do metodo de adicionar carta
 	// do baralho
-	public void adicionaCartaNoBaralho(Integer id)
+	public void adicionaCartaNoBaralho(Carta carta)
 			throws ExcecaoCartaNaoExiste, ExcecaoBaralhoCheio {
-		getBaralho().adicionaCarta(RepositorioCartas.getCarta(id));
+		getBaralho().adicionaCarta(carta);
 	}
 
 	public static Baralho getBaralho() {

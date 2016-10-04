@@ -4,15 +4,15 @@ public class Carta {
 
 	private String nome;
 	private Integer ataque, defesa, id;
-	private Elemento elemento;
+	private String elemento;
 
 	public Carta(String nome, Integer ataque, Integer defesa,
-			Elemento elemento, Integer id) {
+			Integer id, String elemento) {
 		this.nome = nome;
-		this.id = id;
 		this.ataque = ataque;
 		this.defesa = defesa;
 		this.elemento = elemento;
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -31,7 +31,7 @@ public class Carta {
 		return id;
 	}
 
-	public Elemento getElemento() {
+	public String getElemento() {
 		return elemento;
 	}
 

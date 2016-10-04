@@ -1,7 +1,13 @@
 package iu;
 
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import modelo.Carta;
 import modelo.ExcecaoBaralhoCheio;
 import modelo.ExcecaoBaralhoVazio;
 import modelo.ExcecaoCampoCheio;
@@ -14,24 +20,24 @@ import modelo.ExcecaoSenhaErrada;
 import modelo.Jogador;
 import modelo.Mao;
 import modelo.RepositorioCartas;
-import modelo.RepositorioJogadores;
 import modelo.Tabuleiro;
 
 public class Menu {
-	static final Integer QUANTIDADETOTALCARTAS = 30;
-
 	public static void main(String[] args) {
+		Connection bd = null;
 		Tabuleiro tabuleiro;
 		boolean logando = true;
 		boolean dentro = true;
-		boolean noTabuleiro = false;
+		boolean noTabuleiro = true;
 		Jogador jogador = null;
 		Mao maoJogador = null;
 		String login;
 		String senha;
 		Integer opcao;
-		RepositorioCartas.geraCartas();
-
+		bd = inicializaBancoDeDados(bd);
+	      
+		while (true) {
+			dentro = true;
 		while (logando) {
 			opcao = Integer
 					.parseInt(JOptionPane
@@ -43,21 +49,28 @@ public class Menu {
 				senha = JOptionPane
 						.showInputDialog("Digite a senha do jogador");
 				try {
-					jogador = RepositorioJogadores.entrar(login, senha);
+					Statement consulta = bd.createStatement();
+					ResultSet retornoBD = consulta.executeQuery( "SELECT * FROM JOGADOR WHERE LOGIN = " + "'" + login + "';");
+					retornoBD.next();
+					jogador = new Jogador(retornoBD.getString("login"), retornoBD.getString("senha"), 0);
 					logando = false;
-				} catch (ExcecaoJogadorNaoExiste | ExcecaoSenhaErrada e) {
+					consulta.close();
+					retornoBD.close();
+				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null,
 							"Login ou Senha Errados!");
-				}
+				} 
 				break;
 			case 2:
 				login = JOptionPane
 						.showInputDialog("Digite o Login do jogador");
 				senha = JOptionPane
-						.showInputDialog("Digite a Senha do jogador");
+						.showInputDialog("Digite a senha do jogador");
 				try {
-					RepositorioJogadores.criaJogador(login, senha);
-				} catch (ExcecaoJogadorJaExiste e) {
+					Statement criacao = bd.createStatement();
+					criacao.executeUpdate("INSERT INTO JOGADOR (LOGIN,SENHA)" + " VALUES ('" + login +"','"+ senha + "');");
+					criacao.close();	
+				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null, "Login ja existe!");
 				}
 				break;
@@ -94,36 +107,32 @@ public class Menu {
 										.getDefesa();
 						texto += " "
 								+ jogador.getBaralho().getBaralho().get(i)
-										.getElemento().name();
+										.getElemento();
 						texto += "\n";
 					}
 				}
 				JOptionPane.showMessageDialog(null, jogador.getBaralho()
 						.tamanhoDoBaralho()
-						+ "Cartas em seu baralho:\n"
+						+ " Cartas em seu baralho:\n"
 						+ texto);
 				break;
 			case 2:
 				boolean alterando = true;
 
 				while (alterando) {
-					texto = "";
-					for (int i = 0; i < QUANTIDADETOTALCARTAS; i++) {
+					if(texto.isEmpty()) {
 						try {
-							texto += RepositorioCartas.getCarta(i).getId();
-							texto += " "
-									+ RepositorioCartas.getCarta(i).getNome();
-							texto += " "
-									+ RepositorioCartas.getCarta(i).getAtaque();
-							texto += " "
-									+ RepositorioCartas.getCarta(i).getDefesa();
-							texto += " "
-									+ RepositorioCartas.getCarta(i)
-											.getElemento().name();
-							texto += "\n";
-						} catch (ExcecaoCartaNaoExiste e) {
-							JOptionPane.showMessageDialog(null,
-									"Carta nao existe.");
+							Statement consulta = bd.createStatement();
+							ResultSet retornoBD = consulta.executeQuery( "SELECT * FROM CARTAS ORDER BY id;");
+							while (retornoBD.next()) {
+								texto += retornoBD.getString("id") + " " + retornoBD.getString("nome")
+								+ " " + retornoBD.getInt("ataque") + " " + retornoBD.getInt("defesa") 
+								+ " " + retornoBD.getString("elemento") +"\n";
+							}
+							consulta.close();
+							retornoBD.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
 						}
 					}
 					Integer opcao2 = Integer
@@ -137,10 +146,16 @@ public class Menu {
 						break;
 					default:
 						try {
-							for (int i = 0; i < 21; i++)
-								jogador.adicionaCartaNoBaralho(opcao2);
+							Statement consulta = bd.createStatement();
+							ResultSet retornoBD = consulta.executeQuery( "SELECT * FROM CARTAS WHERE ID = '" + opcao2 + "';");
+							retornoBD.next();
+								jogador.adicionaCartaNoBaralho(new Carta(retornoBD.getString("nome"),
+										retornoBD.getInt("ataque"), retornoBD.getInt("defesa"),
+										retornoBD.getInt("id"), retornoBD.getString("elemento")));
 							JOptionPane.showMessageDialog(null,
 									"Carta adicionada!");
+							consulta.close();
+							retornoBD.close();
 						} catch (ExcecaoCartaNaoExiste e) {
 							JOptionPane.showMessageDialog(null,
 									"Carta não existe!");
@@ -148,6 +163,8 @@ public class Menu {
 							JOptionPane.showMessageDialog(null,
 									"Baralho atingiu número limite de cartas.");
 							break;
+						} catch (SQLException e) {
+							e.printStackTrace();
 						}
 						break;
 					}
@@ -176,6 +193,7 @@ public class Menu {
 			case 4:
 				JOptionPane.showMessageDialog(null, "Sessão Finalizada.");
 				dentro = false;
+				logando = true;
 				break;
 			default:
 				JOptionPane.showMessageDialog(null, "Comando Invalido!");
@@ -300,5 +318,20 @@ public class Menu {
 				break;
 			}
 		}
+	}
+}
+
+	private static Connection inicializaBancoDeDados(Connection bd) {
+		try {
+	          Class.forName("org.postgresql.Driver");
+	          bd = DriverManager
+	             .getConnection("jdbc:postgresql://localhost:5432/cards&magic",
+	             "postgres", "10203040");
+	       } catch (Exception e) {
+	          e.printStackTrace();
+	          System.err.println(e.getClass().getName()+": "+e.getMessage());
+	          System.exit(0);
+	       }
+		return bd;
 	}
 }
