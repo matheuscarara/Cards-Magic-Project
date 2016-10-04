@@ -5,14 +5,14 @@ import java.util.List;
 
 public class RepositorioJogadores {
 	
-	private static List<Jogador> jogadores = new ArrayList<Jogador>();
+	private static List<Usuario> jogadores = new ArrayList<Usuario>();
 //metodo de criar jogador
 	//insere jogador numa lista de jogadores
 	public static void criaJogador(String login, String senha) throws ExcecaoJogadorJaExiste{
 		if (retornaIndiceJogador(login) != -1) {
 			throw new ExcecaoJogadorJaExiste();
 		} else {
-			Jogador jogador = new Jogador(login, senha, jogadores.size());
+			Usuario jogador = new Usuario(login, senha, jogadores.size());
 			jogadores.add(jogador);
 		}
 	}
@@ -27,18 +27,18 @@ public class RepositorioJogadores {
 		return -1;
 	}
 	//metodo de fazer login
-	public static Jogador entrar (String login, String senha) throws ExcecaoJogadorNaoExiste, ExcecaoSenhaErrada{
+	public static Usuario entrar (String login, String senha) throws ExcecaoJogadorNaoExiste, ExcecaoSenhaErrada{
 		int indice = retornaIndiceJogador(login);
 		if (indice == -1)
 			throw new ExcecaoJogadorNaoExiste();
 		else 
-			if (jogadores.get(indice).verifica(senha))
+			if (jogadores.get(indice).verificaSenha(senha))
 				return jogadores.get(indice);
 			else
 				throw new ExcecaoSenhaErrada();
 	}
 	
-	public static Jogador getJogador (Integer index) throws ExcecaoJogadorNaoExiste {
+	public static Usuario getJogador (Integer index) throws ExcecaoJogadorNaoExiste {
 		if (index >= jogadores.size() || index < 0) {
 			throw new ExcecaoJogadorNaoExiste();
 		}

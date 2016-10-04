@@ -52,4 +52,7 @@ public class Baralho {
 		Collections.shuffle(baralho);
 		return baralho;
 	}
+	public void setBaralho(List<Carta> embaralha) {
+		baralho = embaralha;
+	}
 }
