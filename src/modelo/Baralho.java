@@ -50,7 +50,7 @@ public class Baralho {
 		return baralho;
 	}
 
-	public void setBaralho(List<Carta> embaralha) {
-		baralho = embaralha;
+	public void setBaralho(List<Carta> novoBaralho) {
+		baralho = novoBaralho;
 	}
 }

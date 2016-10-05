@@ -11,8 +11,7 @@ public class Usuario {
 		this.baralho = new Baralho();
 	}
 
-	public void adicionaCartaNoBaralho(Carta carta)
-			throws ExcecaoCartaNaoExiste, ExcecaoBaralhoCheio {
+	public void adicionaCartaNoBaralho(Carta carta) throws ExcecaoBaralhoCheio {
 		getBaralho().adicionaCarta(carta);
 	}
 

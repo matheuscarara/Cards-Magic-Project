@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JOptionPane;
-
 public class Mapeador {
 
 	private Connection bd = null;
@@ -16,7 +14,7 @@ public class Mapeador {
 		inicializaBancoDeDados();
 	}
 
-	public Usuario carregarJogador(String login, String senha) throws SQLException {
+	public Usuario carregarUsuario(String login, String senha) throws SQLException {
 		Statement consulta = bd.createStatement();
 		ResultSet retornoBD = consulta
 				.executeQuery("SELECT * FROM JOGADOR WHERE LOGIN = " + "'" + login + "'AND SENHA = '" + senha + "';");
@@ -27,39 +25,40 @@ public class Mapeador {
 		return usuarioRetorno;
 	}
 
-	public void salvarJogador(String login, String senha) throws SQLException {
+	public void salvarUsuario(String login, String senha) throws SQLException {
 		Statement criacao = bd.createStatement();
 		criacao.executeUpdate("INSERT INTO JOGADOR (LOGIN,SENHA)" + " VALUES ('" + login + "','" + senha + "');");
 		criacao.close();
 	}
 
-	public void carregaBaralho(Usuario usuario) throws SQLException, ExcecaoCartaNaoExiste, ExcecaoBaralhoCheio {
+	public void carregaBaralho(Usuario usuario) throws SQLException, ExcecaoBaralhoCheio {
+		Baralho baralho2 = new Baralho();
 		Statement montabaralho = bd.createStatement();
 		ResultSet retornoBaralho = montabaralho.executeQuery(
 				"SELECT CARTAS.NOME, CARTAS.ATAQUE," + "CARTAS.DEFESA, CARTAS.ID, CARTAS.ELEMENTO FROM CARTAS, BARALHO"
-						+ " WHERE CARTAS.ID = BARALHO.IDCARTA AND BARALHO.IDJOGADOR = '" + usuario.getLogin() + "';");
+						+ " WHERE CARTAS.ID = BARALHO.IDCARTA AND BARALHO.IDJOGADOR = '" + usuario.getLogin() + "' ORDER BY ID;");
 		while (retornoBaralho.next()) {
-			usuario.adicionaCartaNoBaralho(new Carta(retornoBaralho.getString("nome"), retornoBaralho.getInt("ataque"),
+			baralho2.adicionaCarta(new Carta(retornoBaralho.getString("nome"), retornoBaralho.getInt("ataque"),
 					retornoBaralho.getInt("defesa"), retornoBaralho.getInt("id"),
 					retornoBaralho.getString("elemento")));
 		}
+		usuario.getBaralho().setBaralho(baralho2.getBaralho());
 		montabaralho.close();
 		retornoBaralho.close();
 	}
 
-	public void adicionarCartaBaralho(Usuario jogador, Integer idCarta)
-			throws SQLException, ExcecaoCartaNaoExiste, ExcecaoBaralhoCheio {
+	public void adicionarCartaBaralho(Usuario usuario, Integer idCarta)
+			throws SQLException, ExcecaoBaralhoCheio {
 		Statement consulta = bd.createStatement();
 		ResultSet retornoBD = consulta.executeQuery("SELECT * FROM CARTAS WHERE ID = '" + idCarta + "';");
 		retornoBD.next();
-		jogador.adicionaCartaNoBaralho	(new Carta(retornoBD.getString("nome"), retornoBD.getInt("ataque"),
+		usuario.adicionaCartaNoBaralho(new Carta(retornoBD.getString("nome"), retornoBD.getInt("ataque"),
 				retornoBD.getInt("defesa"), retornoBD.getInt("id"), retornoBD.getString("elemento")));
-		JOptionPane.showMessageDialog(null, "Carta adicionada!");
 		consulta.close();
 		retornoBD.close();
 		Statement adicionado = bd.createStatement();
 		adicionado.executeUpdate("INSERT INTO BARALHO (IDCARTA,IDJOGADOR)" + " VALUES ('" + idCarta + "','"
-				+ jogador.getLogin() + "');");
+				+ usuario.getLogin() + "');");
 		adicionado.close();
 	}
 
