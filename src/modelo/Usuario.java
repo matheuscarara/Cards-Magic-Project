@@ -26,4 +26,8 @@ public class Usuario {
 	public Boolean verificaSenha(String senha) {
 		return this.senha.equals(senha);
 	}
+
+	public String getSenha() {
+		return senha;
+	}
 }

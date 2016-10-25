@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import controle.Mapeador;
 import modelo.ExcecaoCampoVazio;
-import modelo.Mapeador;
 import modelo.Tabuleiro;
 import modelo.Usuario;
 

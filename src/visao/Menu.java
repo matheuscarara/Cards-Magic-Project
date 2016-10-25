@@ -2,11 +2,11 @@ package visao;
 
 import java.sql.SQLException;
 
+import controle.Mapeador;
 import modelo.Duelista;
 import modelo.ExcecaoBaralhoCheio;
 import modelo.ExcecaoCampoCheio;
 import modelo.ExcecaoCampoVazio;
-import modelo.Mapeador;
 import modelo.Moeda;
 import modelo.Tabuleiro;
 import modelo.Usuario;
@@ -29,7 +29,7 @@ public class Menu {
 	}
 
 	private void menuInicial() {
-		Integer opcao = iu.retornaInt("Digite: 1 para realizar um login \n" + "2 para criar um jogador \n"
+		Integer opcao = iu.retornaInt("Digite: \n1 para realizar um login \n" + "2 para criar um jogador \n"
 				+ "Qualquer outro valor para sair.");
 		if (opcao == 1)
 			login();
@@ -59,8 +59,9 @@ public class Menu {
 	private void cadastrar() {
 		String login = iu.retornaString("Digite o Login do jogador:");
 		String senha = iu.retornaString("Digite a senha do jogador:");
+		Usuario usuario = new Usuario(login, senha);
 		try {
-			mapeador.salvarUsuario(login, senha);
+			mapeador.salvarUsuario(usuario);
 			iu.mostraMensagem("Cadastrado com sucesso!");
 		} catch (SQLException e) {
 			iu.mostraMensagem("Login ja existe!");
