@@ -1,5 +1,7 @@
 package modelo;
 
+import modelo.excecoes.ExcecaoBaralhoCheio;
+
 public class Usuario {
 
 	private String login, senha;
@@ -29,5 +31,19 @@ public class Usuario {
 
 	public String getSenha() {
 		return senha;
+	}
+	
+	public String mostraBaralho() {
+		String baralhoUsuario = "";
+		int i;
+		for (i = 0; i < getBaralho().getBaralho().size(); i++) {
+			baralhoUsuario += getBaralho().getBaralho().get(i).getId();
+			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getNome();
+			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getAtaque();
+			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getDefesa();
+			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getElemento();
+			baralhoUsuario += "\n";
+		}
+		return i + " Carta(s) no seu baralho \n\n" + baralhoUsuario;
 	}
 }

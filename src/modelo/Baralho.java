@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import modelo.excecoes.ExcecaoBaralhoCheio;
+import modelo.excecoes.ExcecaoBaralhoVazio;
+
 public class Baralho {
 	private static final Integer TAMANHOMAX = 30;
 	private static final Integer TAMANHOMIN = 21;

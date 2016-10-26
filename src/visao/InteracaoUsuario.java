@@ -4,17 +4,12 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import controle.Mapeador;
-import modelo.ExcecaoCampoVazio;
-import modelo.Tabuleiro;
-import modelo.Usuario;
+import modelo.Comunicador;
 
-public class InteracaoUsuario {
-	
-	String cartas;
+public class InteracaoUsuario implements Comunicador {
 
 	public InteracaoUsuario() {
-		cartas = null;
+
 	}
 
 	public String retornaString(String mensagem) {
@@ -23,6 +18,10 @@ public class InteracaoUsuario {
 
 	public Integer retornaInt(String mensagem) {
 		return Integer.parseInt(JOptionPane.showInputDialog(mensagem));
+	}
+
+	public Boolean retornaBool(String mensagem) {
+		return Boolean.parseBoolean(JOptionPane.showInputDialog(mensagem));
 	}
 
 	public Double retornaDouble(String mensagem) {
@@ -36,43 +35,41 @@ public class InteracaoUsuario {
 	public void mostraMensagem(String mensagem) {
 		JOptionPane.showMessageDialog(null, mensagem);
 	}
-	
-	public Integer mostraCartasParaAdicionar(Mapeador mapeador) throws SQLException {
-		if (cartas == null)
-			cartas = mapeador.carregaCartas();
+
+	public Integer mostraCartasParaAdicionar(String cartas) throws SQLException {
 		return retornaInt("Digite o id da carta que deseja inserir: \n"
-				+ "Ou 50 para sair. \n\n"+cartas);
+				+ "Ou 50 para sair. \n\n" + cartas);
 	}
 
-	public void mostraBaralho(Usuario usuario) {
-		String baralhoUsuario = "";
-		int i;
-		for (i = 0; i < usuario.getBaralho().getBaralho().size(); i++) {
-			baralhoUsuario += usuario.getBaralho().getBaralho().get(i).getId();
-			baralhoUsuario += " " + usuario.getBaralho().getBaralho().get(i).getNome();
-			baralhoUsuario += " " + usuario.getBaralho().getBaralho().get(i).getAtaque();
-			baralhoUsuario += " " + usuario.getBaralho().getBaralho().get(i).getDefesa();
-			baralhoUsuario += " " + usuario.getBaralho().getBaralho().get(i).getElemento();
-			baralhoUsuario += "\n";
-		}
-		mostraMensagem(i + " Carta(s) no seu baralho \n\n" + baralhoUsuario);
+	@Override
+	public Integer indiceCartaDaMaoParaColocaNoCampo(String campo, String mao) {
+		return retornaInt("Digite a carta a ser inserida: \n\n" + mao + "\n\n"
+				+ campo + "\n\n" + "Digite qualquer outro valor para sair.");
 	}
 
-	public String mostraCampo(Tabuleiro tabuleiro) {
-		String campo = "";
-		try {
-			for (int i = 0; i < tabuleiro.getCampo().size(); i++) {
-				campo += i;
-				campo += " " + tabuleiro.getCampo().get(i).getNome();
-				campo += " " + tabuleiro.getCampo().get(i).getAtaque();
-				campo += " " + tabuleiro.getCampo().get(i).getDefesa();
-				campo += " " + tabuleiro.getCampo().get(i).getElemento();
-				campo += "\n";
-			}
-		} catch (ExcecaoCampoVazio e) {
-			return "Campo Vazio";
-		}
-		return campo;
+	@Override
+	public void perdeu() {
+		mostraMensagem("Você Perdeu!");
+	}
+
+	@Override
+	public void ganhou() {
+		mostraMensagem("Parabéns!! Você Ganhou!!");
+	}
+
+	@Override
+	public void campoCheio() {
+		mostraMensagem("Campo cheio, impossível adicionar mais alguma carta.");
+	}
+
+	@Override
+	public void indiceInvalido() {
+		mostraMensagem("Indice Inválido");
+	}
+
+	@Override
+	public void mostraCampo(String campo) {
+		mostraMensagem(campo);
 	}
 
 }

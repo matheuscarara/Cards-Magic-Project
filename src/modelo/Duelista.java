@@ -3,6 +3,10 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.excecoes.ExcecaoBaralhoVazio;
+import modelo.excecoes.ExcecaoMaoCheia;
+import modelo.excecoes.ExcecaoMaoVazia;
+
 public class Duelista {
 
 	private Integer pontosDeVida;
@@ -45,7 +49,7 @@ public class Duelista {
 	}
 
 	public void iniciaMao() {
-		for (int i = 0; i < TAMANHOMAXMAO; i++) {
+		for (int i = 0; i < TAMANHOMAXMAO - 1; i++) {
 			try {
 				mao.add(baralhoDoJogo.comprarCarta());
 			} catch (ExcecaoBaralhoVazio e) {
