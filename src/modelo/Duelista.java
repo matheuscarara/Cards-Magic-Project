@@ -10,7 +10,7 @@ import modelo.excecoes.ExcecaoMaoVazia;
 public class Duelista {
 
 	private Integer pontosDeVida;
-	private static final Integer VIDAMAX = 1000;
+	private static final Integer VIDAMAX = 8000;
 	private List<Carta> mao;
 	private Baralho baralhoDoJogo;
 	private Usuario jogador;
@@ -42,10 +42,6 @@ public class Duelista {
 
 	public Integer getPontosDeVida() {
 		return pontosDeVida;
-	}
-
-	public void causarDano(Duelista alvo, Integer dano) {
-		alvo.receberDano(dano);
 	}
 
 	public void iniciaMao() {

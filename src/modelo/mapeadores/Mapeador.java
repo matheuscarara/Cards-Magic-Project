@@ -24,16 +24,16 @@ public class Mapeador {
 	public Usuario carregarUsuario(String login, String senha)
 			throws SQLException {
 		return mu.carregaUsuario(login, senha);
-			}
+	}
 
 	public void salvarUsuario(Usuario usuario) throws SQLException {
 		mu.salvarUsuario(usuario);
-		}
+	}
 
 	public void carregaBaralho(Usuario usuario) throws SQLException,
 			ExcecaoBaralhoCheio {
 		mb.carregaBaralho(usuario);
-		}
+	}
 
 	public void adicionarCartaBaralho(Usuario usuario, Integer idCarta)
 			throws SQLException, ExcecaoBaralhoCheio {
@@ -42,7 +42,7 @@ public class Mapeador {
 
 	public String carregaCartas() throws SQLException {
 		return mc.carregaCartas();
-		}
+	}
 
 	private void inicializaBancoDeDados() {
 		try {

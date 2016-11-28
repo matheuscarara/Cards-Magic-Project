@@ -5,14 +5,15 @@ public class Carta {
 	private String nome;
 	private Integer ataque, defesa, id;
 	private String elemento;
+	private String caminhoImagem;
 
-	public Carta(String nome, Integer ataque, Integer defesa, Integer id,
-			String elemento) {
+	public Carta(String nome, Integer ataque, Integer defesa, Integer id, String elemento, String caminhoImagem) {
 		this.nome = nome;
 		this.ataque = ataque;
 		this.defesa = defesa;
 		this.elemento = elemento;
 		this.id = id;
+		this.caminhoImagem = "resources/" + caminhoImagem;
 	}
 
 	public String getNome() {
@@ -33,6 +34,10 @@ public class Carta {
 
 	public String getElemento() {
 		return elemento;
+	}
+
+	public String getCaminhoImagem() {
+		return caminhoImagem;
 	}
 
 }

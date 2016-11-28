@@ -32,18 +32,21 @@ public class Usuario {
 	public String getSenha() {
 		return senha;
 	}
-	
+
 	public String mostraBaralho() {
 		String baralhoUsuario = "";
 		int i;
 		for (i = 0; i < getBaralho().getBaralho().size(); i++) {
 			baralhoUsuario += getBaralho().getBaralho().get(i).getId();
 			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getNome();
-			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getAtaque();
-			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getDefesa();
-			baralhoUsuario += " " + getBaralho().getBaralho().get(i).getElemento();
-			baralhoUsuario += "\n";
+			baralhoUsuario += " "
+					+ getBaralho().getBaralho().get(i).getAtaque();
+			baralhoUsuario += " "
+					+ getBaralho().getBaralho().get(i).getDefesa();
+			baralhoUsuario += " "
+					+ getBaralho().getBaralho().get(i).getElemento();
+			baralhoUsuario += "<br/>";
 		}
-		return i + " Carta(s) no seu baralho \n\n" + baralhoUsuario;
+		return "<html>" + i + " Carta(s) no seu baralho <br> <br>" + baralhoUsuario + "</html>";
 	}
 }

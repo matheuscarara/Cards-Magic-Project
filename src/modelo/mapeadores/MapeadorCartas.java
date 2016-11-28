@@ -16,17 +16,15 @@ public class MapeadorCartas {
 
 		String textoRetorno = "";
 		Statement consulta = bd.createStatement();
-		ResultSet retornoBD = consulta
-				.executeQuery("SELECT * FROM CARTAS ORDER BY id;");
+		ResultSet retornoBD = consulta.executeQuery("SELECT * FROM CARTAS ORDER BY id;");
 		while (retornoBD.next()) {
-			textoRetorno += retornoBD.getString("id") + " "
-					+ retornoBD.getString("nome") + " "
-					+ retornoBD.getInt("ataque") + " "
-					+ retornoBD.getInt("defesa") + " "
-					+ retornoBD.getString("elemento") + "\n";
+			textoRetorno += retornoBD.getString("id") + " " + retornoBD.getString("nome") + " "
+					+ retornoBD.getInt("ataque") + " " + retornoBD.getInt("defesa") + " "
+					+ retornoBD.getString("elemento") + "<br>";
 		}
 		consulta.close();
 		retornoBD.close();
+		textoRetorno += "</html>";
 		return textoRetorno;
 
 	}

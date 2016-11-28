@@ -14,15 +14,12 @@ public class MapeadorUsuario {
 		this.bd = bd;
 	}
 
-	public Usuario carregaUsuario(String login, String senha)
-			throws SQLException {
+	public Usuario carregaUsuario(String login, String senha) throws SQLException {
 		Statement consulta = bd.createStatement();
 		ResultSet retornoBD = consulta
-				.executeQuery("SELECT * FROM JOGADOR WHERE LOGIN = " + "'"
-						+ login + "'AND SENHA = '" + senha + "';");
+				.executeQuery("SELECT * FROM JOGADOR WHERE LOGIN = " + "'" + login + "'AND SENHA = '" + senha + "';");
 		retornoBD.next();
-		Usuario usuarioRetorno = new Usuario(retornoBD.getString("login"),
-				retornoBD.getString("senha"));
+		Usuario usuarioRetorno = new Usuario(retornoBD.getString("login"), retornoBD.getString("senha"));
 		consulta.close();
 		retornoBD.close();
 		return usuarioRetorno;
@@ -30,11 +27,10 @@ public class MapeadorUsuario {
 
 	public void salvarUsuario(Usuario usuario) throws SQLException {
 		Statement criacao = bd.createStatement();
-		criacao.executeUpdate("INSERT INTO JOGADOR (LOGIN,SENHA)"
-				+ " VALUES ('" + usuario.getLogin() + "','"
+		criacao.executeUpdate("INSERT INTO JOGADOR (LOGIN,SENHA)" + " VALUES ('" + usuario.getLogin() + "','"
 				+ usuario.getSenha() + "');");
 		criacao.close();
-			
+
 	}
 
 }

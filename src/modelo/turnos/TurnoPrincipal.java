@@ -9,31 +9,15 @@ public class TurnoPrincipal extends Turno {
 
 	@Override
 	public void acao(Tabuleiro tabuleiro) {
-		if (tabuleiro.getVez() == VEZDUELISTA) {
-			Boolean valido = Boolean.FALSE;
-			Integer indice = 0;
-			while (!valido) {
-				indice = tabuleiro.getComunicador().indiceCartaDaMaoParaColocaNoCampo(tabuleiro.getCampo(),
-						tabuleiro.getDuelista().mostraMao());
-				if (!(indice >= tabuleiro.getDuelista().getTamanhoDaMao() || indice < 0)){
-					valido = Boolean.TRUE;
-				} else {
-					tabuleiro.getComunicador().indiceInvalido();
-				}
-			}
-			try {
-				tabuleiro.colocaEmCampo(indice);
-			} catch (ExcecaoCampoCheio e) {
-				tabuleiro.getComunicador().campoCheio();
-			}
-		} else {
+		if (tabuleiro.getVez() == VEZBOT) {
 			try {
 				tabuleiro.colocaEmCampo(procuraMaisAlta(tabuleiro.getBot()));
-				tabuleiro.getComunicador().mostraCampo(tabuleiro.getCampo());
 			} catch (ExcecaoCampoCheio | ExcecaoMaoVazia e) {
 			}
+			trocaTurno(tabuleiro);
+		} else {
+			tabuleiro.getComunicador().cartaColocaNoCampo();
 		}
-		trocaTurno(tabuleiro);
 	}
 
 	private Integer procuraMaisAlta(Duelista bot) throws ExcecaoMaoVazia {

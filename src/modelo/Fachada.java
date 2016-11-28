@@ -4,7 +4,9 @@ import java.sql.SQLException;
 
 import modelo.excecoes.ExcecaoBaralhoCheio;
 import modelo.excecoes.ExcecaoCampoCheio;
+import modelo.excecoes.ExcecaoCampoVazio;
 import modelo.mapeadores.Mapeador;
+import modelo.turnos.TurnoBatalha;
 
 public class Fachada {
 
@@ -24,8 +26,7 @@ public class Fachada {
 		this.comunicador = comunicador;
 	}
 
-	public void carregaUsuario(String login, String senha) throws SQLException,
-			ExcecaoBaralhoCheio {
+	public void carregaUsuario(String login, String senha) throws SQLException, ExcecaoBaralhoCheio {
 		usuario = mapeador.carregarUsuario(login, senha);
 		carregaBaralho();
 	}
@@ -65,9 +66,18 @@ public class Fachada {
 		return cartas;
 	}
 
-	public void adicionaCarta(Integer idCarta) throws SQLException,
-			ExcecaoBaralhoCheio {
+	public void adicionaCarta(Integer idCarta) throws SQLException, ExcecaoBaralhoCheio {
 		mapeador.adicionarCartaBaralho(usuario, idCarta);
+	}
+
+	public void colocaCartaNoCampo(Integer idCarta) {
+		try {
+			tabuleiro.colocaEmCampo(idCarta);
+			tabuleiro.getTurno().trocaTurno(tabuleiro);
+		} catch (ExcecaoCampoCheio e) {
+			tabuleiro.getComunicador().campoCheio();
+			tabuleiro.getTurno().trocaTurno(tabuleiro);
+		}
 	}
 
 	public String mostraMao() {
@@ -82,12 +92,30 @@ public class Fachada {
 		return tabuleiro.getDuelista().getTamanhoDaMao();
 	}
 
-	public void colocaEmCampo(Integer indice) throws ExcecaoCampoCheio {
-		tabuleiro.colocaEmCampo(indice);
-	}
-
 	public String mostraBaralho() {
 		return usuario.mostraBaralho();
 	}
 
+	public void setComunicador(Comunicador comunicador) {
+		tabuleiro.setComunicador(comunicador);
+	}
+
+	public void trocaTurno() {
+		tabuleiro.getTurno().trocaTurno(tabuleiro);
+	}
+
+	public void ataca(Integer idCartaAtacando, Integer idCartaDefendendo) {
+		if (idCartaDefendendo != null) {
+			try {
+				tabuleiro.ataca(tabuleiro.getCampoDuelista().get(idCartaAtacando),
+						tabuleiro.getCampoBot().get(idCartaDefendendo));
+			} catch (ExcecaoCampoVazio e) {
+			}
+		} else {
+			try {
+				tabuleiro.ataca(tabuleiro.getCampoDuelista().get(idCartaAtacando), null);
+			} catch (ExcecaoCampoVazio e) {
+			}
+		}
+	}
 }

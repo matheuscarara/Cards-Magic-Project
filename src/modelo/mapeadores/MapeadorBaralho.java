@@ -18,20 +18,17 @@ public class MapeadorBaralho {
 		this.bd = bd;
 	}
 
-	public void carregaBaralho(Usuario usuario) throws SQLException,
-			ExcecaoBaralhoCheio {
+	public void carregaBaralho(Usuario usuario) throws SQLException, ExcecaoBaralhoCheio {
 		Baralho baralho2 = new Baralho();
 		Statement montabaralho = bd.createStatement();
-		ResultSet retornoBaralho = montabaralho
-				.executeQuery("SELECT CARTAS.NOME, CARTAS.ATAQUE,"
-						+ "CARTAS.DEFESA, CARTAS.ID, CARTAS.ELEMENTO FROM CARTAS, BARALHO"
-						+ " WHERE CARTAS.ID = BARALHO.IDCARTA AND BARALHO.IDJOGADOR = '"
-						+ usuario.getLogin() + "' ORDER BY ID;");
+		ResultSet retornoBaralho = montabaralho.executeQuery("SELECT CARTAS.NOME, CARTAS.ATAQUE,"
+				+ "CARTAS.DEFESA, CARTAS.ID, CARTAS.ELEMENTO, CARTAS.IMG FROM CARTAS, BARALHO"
+				+ " WHERE CARTAS.ID = BARALHO.IDCARTA AND BARALHO.IDJOGADOR = '" + usuario.getLogin()
+				+ "' ORDER BY ID;");
 		while (retornoBaralho.next()) {
-			baralho2.adicionaCarta(new Carta(retornoBaralho.getString("nome"),
-					retornoBaralho.getInt("ataque"), retornoBaralho
-							.getInt("defesa"), retornoBaralho.getInt("id"),
-					retornoBaralho.getString("elemento")));
+			baralho2.adicionaCarta(new Carta(retornoBaralho.getString("nome"), retornoBaralho.getInt("ataque"),
+					retornoBaralho.getInt("defesa"), retornoBaralho.getInt("id"), retornoBaralho.getString("elemento"),
+					retornoBaralho.getString("img")));
 		}
 		usuario.getBaralho().setBaralho(baralho2.getBaralho());
 		montabaralho.close();
@@ -39,23 +36,20 @@ public class MapeadorBaralho {
 
 	}
 
-	public void adicionarCartaBaralho(Usuario usuario, Integer idCarta)
-			throws SQLException, ExcecaoBaralhoCheio {
+	public void adicionarCartaBaralho(Usuario usuario, Integer idCarta) throws SQLException, ExcecaoBaralhoCheio {
 
 		Statement consulta = bd.createStatement();
-		ResultSet retornoBD = consulta
-				.executeQuery("SELECT * FROM CARTAS WHERE ID = '" + idCarta
-						+ "';");
+		ResultSet retornoBD = consulta.executeQuery("SELECT * FROM CARTAS WHERE ID = '" + idCarta + "';");
 		retornoBD.next();
-		usuario.adicionaCartaNoBaralho(new Carta(retornoBD.getString("nome"),
-				retornoBD.getInt("ataque"), retornoBD.getInt("defesa"),
-				retornoBD.getInt("id"), retornoBD.getString("elemento")));
+		usuario.adicionaCartaNoBaralho(
+				new Carta(retornoBD.getString("nome"), retornoBD.getInt("ataque"), retornoBD.getInt("defesa"),
+						retornoBD.getInt("id"), retornoBD.getString("elemento"), retornoBD.getString("img")));
 		consulta.close();
 		retornoBD.close();
 		Statement adicionado = bd.createStatement();
-		adicionado.executeUpdate("INSERT INTO BARALHO (IDCARTA,IDJOGADOR)"
-				+ " VALUES ('" + idCarta + "','" + usuario.getLogin() + "');");
+		adicionado.executeUpdate("INSERT INTO BARALHO (IDCARTA,IDJOGADOR)" + " VALUES ('" + idCarta + "','"
+				+ usuario.getLogin() + "');");
 		adicionado.close();
-		}
+	}
 
 }
